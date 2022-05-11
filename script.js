@@ -20,11 +20,8 @@ const clear = () => {
 }
 
 const updateVariable = (number) => {
-    if (resultVariable.includes('.') && resultVariable.toString().split('.')[1].length >= 8 ) {
-        return;
-    }
+    if (resultVariable.includes('.') && resultVariable.toString().split('.')[1].length >= 8 ) return;
     if (number === '.' && resultVariable.includes('.')) return
-    console.log(typeof number, 'updater')
 
     resultVariable = resultVariable.toString() + number.toString()
 }
@@ -45,6 +42,7 @@ const setOperator = (key) => {
 }
 
 const calculate = () => {
+    let expression
     let result
     const prev = parseFloat(expressionVariable)
     const curr = parseFloat(resultVariable)
@@ -52,11 +50,21 @@ const calculate = () => {
 
     switch (operator) {
         case '+':
-            result = (Number(prev) + Number(curr)).toFixed(8)
+            expression = Number(prev) + Number(curr)
+            if (expression.toString().length >= 8) {
+                result = expression.toFixed(8)
+            } else {
+                result = expression
+            }
             updateDisplay(operator)
             break;
         case '-':
-            result = (Number(prev) - Number(curr)).toFixed(8)
+            expression = Number(prev) - Number(curr)
+            if (expression.toString().length >= 8) {
+                result = expression.toFixed(8)
+            } else {
+                result = expression
+            }
             updateDisplay(operator)
             break;
         case '÷':
@@ -66,15 +74,30 @@ const calculate = () => {
                 resultDisplay.textContent = 'Cannot divide by zero'
                 throw new Error('Cannot divide by zero')
             }
-            result = (Number(prev) / Number(curr)).toFixed(8)
+            expression = Number(prev) / Number(curr)
+            if (expression.toString().length >= 8) {
+                result = expression.toFixed(8)
+            } else {
+                result = expression
+            }
             updateDisplay(operator)
             break;
         case '×':
-            result = (Number(prev) * Number(curr)).toFixed(8)
+            expression = Number(prev) * Number(curr)
+            if (expression.toString().length >= 8) {
+                result = expression.toFixed(8)
+            } else {
+                result = expression
+            }
             updateDisplay(operator)
             break;
         case '%':
-            result = ((Number(prev) * Number(curr)) / 100).toFixed(8)
+            expression = (Number(prev) * Number(curr)) / 100
+            if (expression.toString().length >= 8) {
+                result = expression.toFixed(8)
+            } else {
+                result = expression
+            }
             updateDisplay(operator)
             break;
         default:
